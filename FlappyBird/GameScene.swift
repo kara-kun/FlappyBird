@@ -333,12 +333,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        //ちょっとログとってみようか・・・
-//        print(contact.bodyA.categoryBitMask)
-//        print(contact.bodyA.categoryBitMask & scoreCategory)
-//        print(scoreCategory)
-//        print(contact.bodyB.categoryBitMask)
-//        print(contact.bodyB.categoryBitMask & scoreCategory)
+        //bodyAとbodyBの内容確認用ログ
+        print(contact.bodyA.categoryBitMask)
+        print(contact.bodyA.categoryBitMask & scoreCategory)
+        print(scoreCategory)
+        print(contact.bodyB.categoryBitMask)
+        print(contact.bodyB.categoryBitMask & scoreCategory)
         //score(bodyA)とbird(bodyB)が接触した場合
         if (contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory == scoreCategory) {
             //スコアを＋１加算
@@ -371,24 +371,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.bird.speed = 0
             })
         }
-        
-//        func restart() {
-//            //スコアをゼロに戻す
-//            score = 0
-//
-//            //鳥の位置.速度を初期状態に戻す
-//            bird.position = CGPoint (x: self.frame.size.width * 0.2, y: self.frame.size.height * 0.7)
-//            bird.physicsBody?.velocity = CGVector.zero
-//            //地面と壁の両方を、衝突（反発）の対象に戻す
-//            bird.physicsBody?.collisionBitMask = groundCategory | wallCategory
-//            //鳥の回転角をゼロに戻す
-//            bird.zRotation = 0
-//            //wallNodeから全ての壁を消去
-//            wallNode.removeAllChildren()
-//
-//            bird.speed = 1
-//            scrollNode.speed = 1
-//        }
         
     }
 
