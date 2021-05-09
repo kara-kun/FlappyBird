@@ -12,6 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scrollNode:SKNode!
     var wallNode: SKNode!
     var bird: SKSpriteNode!
+    var itemNode: SKNode!//アイテム用のノードを定美
     
     //衝突判定カテゴリー
     var birdCategory:UInt32 = 1 << 0    //0...00001
@@ -40,16 +41,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scrollNode = SKNode()
         addChild(scrollNode)
         
+        //---------スクロールノードscrollNodeに「壁」と「アイテム」の親Node(SKNode)を追加--------------
         //壁用の親ノードのインスタンスwallNodeを設定
         wallNode = SKNode()
         scrollNode.addChild(wallNode)
         
-        //各スプライトを描画
+        //アイテム用ノードのインスタンスitemNodeを設定
+        itemNode = SKNode()
+        scrollNode.addChild(itemNode)
+        
+        //----------------------------各スプライトを描画-----------------------------
         setupGround()
         setupCloud()
         setupWall()
         setupBird()
         setupScoreLabel()
+        setupItem()
         
         }
     
@@ -255,8 +262,72 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
     }
+    
+    //-------------------------アイテムの描写---------------------------
+    func setupItem() {
+        //アイテムの画像を読み込む
+        let itemTexture = SKTexture(imageNamed: "item")
+        itemTexture.filteringMode = .linear
+        
+        //移動する距離を計算（壁と同じ）
+        let movingdistance = CGFloat(self.frame.size.width + itemTexture.size().width)
+        //画面外まで移動するアクションを作成:4秒で「画面横幅サイズ ＋ アイテムの横幅サイズ」-> 壁と同じ
+        let moveItem = SKAction.moveBy(x: -movingdistance, y: 0, duration: 4)
+        //自身を取り除くアクションを作成
+        let removeItem = SKAction.removeFromParent()
+        //２つのアニメーションを順に実行するアクションを定義(moveItem->removeItem)
+        let itemAnimation = SKAction.sequence([moveItem, removeItem])
+        
+        //アイテムを出現させるアニメーションを定義
+        let createItemAnimation = SKAction.run({
+            //アイテムを載せる用のノードを作成
+            let item = SKNode()
+            
+            //アイテムのスプライトSKSpriteNodeを定義
+            let itemSprite = SKSpriteNode(texture: itemTexture)
+            itemSprite.zPosition = -50 //アイテムのz位置を壁と同じに揃える
+            
+            //地面のサイズを取得
+            let groundSize = SKTexture(imageNamed: "ground")
+            
+            // -----------アイテムの出現範囲: x=壁と次の壁の中間地点, y=画面上端〜地面の上スレスレ-------
+            // ---------まずはyから-------
+            //item_yの値範囲の幅＝画面全体の高さー（地面の高さ　＋　(アイテム自身の高さ/2)x2
+            let item_y_range = self.frame.size.height - groundSize.size().height - itemTexture.size().height
+            //item_yの下限座標 = 地面の高さ　＋　(アイテム自体の高さ/2)
+            let item_y_lowest = groundSize.size().height + itemTexture.size().height / 2
+            //itemのy座標をランダムに決める。
+            let coordinate_y = item_y_lowest + (CGFloat.random(in: 0 ..< item_y_range))
+            
+            //----------そしてx-----------
+            let coordinate_x = CGFloat(self.frame.size.width + itemTexture.size().width / 2)
+            
+            //アイテムの最初の位置を決定
+            itemSprite.position = CGPoint(x: coordinate_x, y: coordinate_y)
+            
+            //アイテムのスプライトをitemノードに乗せる
+            item.addChild(itemSprite)
+            //一回動かしてみる
+            item.run(itemAnimation)
+            
+            self.itemNode.addChild(item)
+        })
 
-        // Do any additional setup after loading the view.
+        //壁が出現してから1秒後にアイテムが出現するように待ち時間を設定
+        let firstWaitAnimation = SKAction.wait(forDuration: 1)
+        //アイテム出現->次のアイテム出現、をくりかえずアニメーションを設定
+        let repeatItemAnimation =  SKAction.repeatForever(SKAction.sequence([firstWaitAnimation, createItemAnimation , firstWaitAnimation]))
+        itemNode.run(repeatItemAnimation)
+        
+        
+//        let waitAnimation = SKAction.wait(forDuration: 2)
+//        let repeatForeverAnimation = SKAction.repeatForever(SKAction.sequence([createItemAnimation, waitAnimation]))
+//        let waitAnimation1 = SKAction.wait(forDuration: 1)
+//        let repeatForeverAfter1 = SKAction.sequence([waitAnimation1, repeatForeverAnimation])
+//        itemNode.run(repeatForeverAfter1)
+    }
+
+  
     //----------------------------鳥の描画-----------------------------
     func setupBird() {
         //二種類の鳥の画像を読み込みImporting two bird images with SKTexture method.
@@ -307,8 +378,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bird.physicsBody?.collisionBitMask = groundCategory | wallCategory
             //鳥の回転角をゼロに戻す
             bird.zRotation = 0
-            //wallNodeから全ての壁を消去
+            //wallNode/itemNodeから全ての壁を消去
             wallNode.removeAllChildren()
+            itemNode.removeAllChildren()
             
             bird.speed = 1
             scrollNode.speed = 1
@@ -355,8 +427,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 userDefaults.set(bestScore, forKey:"BEST")
                 userDefaults.synchronize()
             }
-            
-            
         //壁(bodyA)とbird(bodyB)が接触した場合
         } else {
             print("GAME OVER")
@@ -373,16 +443,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
