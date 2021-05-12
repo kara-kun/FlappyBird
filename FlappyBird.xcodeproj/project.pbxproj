@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6492D36264BB2B8001DE211 /* BGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6492D35264BB2B8001DE211 /* BGM.mp3 */; };
 		C674684E2641333400287F10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C674684D2641333400287F10 /* AppDelegate.swift */; };
 		C67468502641333400287F10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C674684F2641333400287F10 /* SceneDelegate.swift */; };
 		C67468522641333400287F10 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67468512641333400287F10 /* ViewController.swift */; };
@@ -14,9 +15,14 @@
 		C67468572641333700287F10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C67468562641333700287F10 /* Assets.xcassets */; };
 		C674685A2641333700287F10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C67468582641333700287F10 /* LaunchScreen.storyboard */; };
 		C6746865264176F400287F10 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6746864264176F400287F10 /* GameScene.swift */; };
+		C6BD62D5264B8551002A79E2 /* Computer Data 03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6BD62D4264B8551002A79E2 /* Computer Data 03.mp3 */; };
+		C6BD62D9264BA865002A79E2 /* Golf Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6BD62D7264BA864002A79E2 /* Golf Hit.mp3 */; };
+		C6BD62DA264BA865002A79E2 /* Cartoon Boing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6BD62D8264BA865002A79E2 /* Cartoon Boing.mp3 */; };
+		C6BD62DD264BAAB3002A79E2 /* Bell Transition.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6BD62DC264BAAB3002A79E2 /* Bell Transition.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C6492D35264BB2B8001DE211 /* BGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM.mp3; sourceTree = "<group>"; };
 		C674684A2641333400287F10 /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C674684D2641333400287F10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C674684F2641333400287F10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +32,10 @@
 		C67468592641333700287F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C674685B2641333700287F10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6746864264176F400287F10 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		C6BD62D4264B8551002A79E2 /* Computer Data 03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Computer Data 03.mp3"; sourceTree = "<group>"; };
+		C6BD62D7264BA864002A79E2 /* Golf Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Golf Hit.mp3"; sourceTree = "<group>"; };
+		C6BD62D8264BA865002A79E2 /* Cartoon Boing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Cartoon Boing.mp3"; sourceTree = "<group>"; };
+		C6BD62DC264BAAB3002A79E2 /* Bell Transition.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Bell Transition.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +68,13 @@
 		C674684C2641333400287F10 /* FlappyBird */ = {
 			isa = PBXGroup;
 			children = (
+				C6BD62D8264BA865002A79E2 /* Cartoon Boing.mp3 */,
+				C6BD62D7264BA864002A79E2 /* Golf Hit.mp3 */,
+				C6BD62D4264B8551002A79E2 /* Computer Data 03.mp3 */,
 				C674684D2641333400287F10 /* AppDelegate.swift */,
 				C674684F2641333400287F10 /* SceneDelegate.swift */,
+				C6492D35264BB2B8001DE211 /* BGM.mp3 */,
+				C6BD62DC264BAAB3002A79E2 /* Bell Transition.mp3 */,
 				C67468512641333400287F10 /* ViewController.swift */,
 				C6746864264176F400287F10 /* GameScene.swift */,
 				C67468532641333400287F10 /* Main.storyboard */,
@@ -129,7 +144,12 @@
 			files = (
 				C674685A2641333700287F10 /* LaunchScreen.storyboard in Resources */,
 				C67468572641333700287F10 /* Assets.xcassets in Resources */,
+				C6BD62DA264BA865002A79E2 /* Cartoon Boing.mp3 in Resources */,
+				C6492D36264BB2B8001DE211 /* BGM.mp3 in Resources */,
+				C6BD62D5264B8551002A79E2 /* Computer Data 03.mp3 in Resources */,
 				C67468552641333400287F10 /* Main.storyboard in Resources */,
+				C6BD62DD264BAAB3002A79E2 /* Bell Transition.mp3 in Resources */,
+				C6BD62D9264BA865002A79E2 /* Golf Hit.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
