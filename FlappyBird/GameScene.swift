@@ -37,7 +37,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let tapSound = SKAction.playSoundFileNamed("Golf Hit.mp3", waitForCompletion: false)
     
     //BGMを設定
-    var backgroundMusic = SKAudioNode()
+ 
+    let audioUrl:URL? = Bundle.main.url(forResource: "BGM", withExtension: "mp3")
+    //let audioUrl = URL(fileURLWithPath: audioPath)
+    var player:AVAudioPlayer!
+
     
     //デフォルト値を記録するインスタンスを定義??
     let userDefaults: UserDefaults = UserDefaults.standard
@@ -64,10 +68,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         itemNode = SKNode()
         scrollNode.addChild(itemNode)
         
-        // BGM流す(scrollNodeにのせる)
-//        backgroundMusic = SKAudioNode(fileNamed: "BGM.mp3")
-//        backgroundMusic.autoplayLooped = true
-//        scrollNode.addChild(backgroundMusic)
+        // BGM流す
+        try! player = AVAudioPlayer(contentsOf:audioUrl!)
+        player.prepareToPlay()
+        player.numberOfLoops = -1
+        player.play()
+
         
         //----------------------------各スプライトを描画-----------------------------
         setupGround()
@@ -77,7 +83,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupScoreLabel()
         setupItem()
 
-        }
+    }
     
     func setupScoreLabel() {
         //-----------スコアラベルの設定------------
@@ -392,6 +398,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bird.run(flap)
         //スプライトを追加
         addChild(bird)
+
     }
     
     //タップ操作時の動作を実装する
@@ -420,6 +427,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             bird.speed = 1
             scrollNode.speed = 1
+            
+            // BGM流す
+            try! player = AVAudioPlayer(contentsOf:audioUrl!)
+            player.prepareToPlay()
+            player.numberOfLoops = -1
+            player.play()
         }
         
         //スクロールが止まっていなければ -> scrollNode.speed >0 ならば
@@ -491,9 +504,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contactedBody.node!.removeFromParent()
             
         } else {
-//            backgroundMusic = SKAudioNode()
-//            let stopAction = SKAction.stop()
-//            backgroundMusic.run(stopAction)
+            //BGMを止める
+            player.stop()
+            //BGM巻き戻し
+            player.currentTime = 0
+            player.prepareToPlay()
+
             //SEを鳴らす
             run(collisionSound)
             //GAMEOVER
